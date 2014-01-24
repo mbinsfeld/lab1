@@ -86,8 +86,14 @@ object Lab1 extends jsy.util.JsyApplication {
 
   
   def repeat(s: String, n: Int): String = {
+    require(n >= 0)
     val orig = s
-    repeat_helper(s, orig, n-1)
+    if (n == 0){
+      ""
+    }
+    else{
+    	repeat_helper(s, orig, n-1)
+    }
   }
   def repeat_helper(s: String, orig: String, n: Int):String ={
     if(n > 0) repeat_helper(s + orig, orig, n - 1)
@@ -99,7 +105,8 @@ object Lab1 extends jsy.util.JsyApplication {
   }
 
   def sqrtN(c: Double, x0: Double, n: Int): Double = {
-		require(c >= 0, "c is negative") 
+		require(c >= 0)
+		require(n >= 0)
 		sqrtN_helper(c, x0, n, 0)
   }
   def sqrtN_helper(c: Double, x0: Double, n: Int, iter: Int): Double = {
@@ -110,6 +117,7 @@ object Lab1 extends jsy.util.JsyApplication {
   
   def sqrtErr(c: Double, x0: Double, epsilon: Double): Double ={
     require(c >= 0, "c is negative")
+    require(epsilon > 0)
     if (abs((x0*x0)-c) >= epsilon){
       val temp = sqrtStep(c, x0)
       sqrtErr(c, temp, epsilon)
@@ -129,7 +137,7 @@ object Lab1 extends jsy.util.JsyApplication {
   def repOk(t: SearchTree): Boolean = {
     def check(t: SearchTree, min: Int, max: Int): Boolean = t match {
       case Empty => true
-      case Node(l, d, r) => min < d && d <= max && 
+      case Node(l, d, r) => min <= d && d < max && 
       check(l, min, d) && check(r, d, max)
       						
     }
