@@ -4,9 +4,9 @@ object Lab1 extends jsy.util.JsyApplication {
   
   /*
    * CSCI 3155: Lab 1
-   * <Your Name>
+   * Ryan Denzel
    * 
-   * Partner: <Your Partner's Name>
+   * Partner: Matt Binsfeld
    * Collaborators: <Any Collaborators>
    */
 
@@ -75,19 +75,46 @@ object Lab1 extends jsy.util.JsyApplication {
 
   /* Exercises */
 
-  def abs(n: Double): Double = throw new UnsupportedOperationException
+  def abs(n: Double): Double = {
+    if(n < 0) n * (-1); else n
+  } 
 
-  def xor(a: Boolean, b: Boolean): Boolean = throw new UnsupportedOperationException
+  def xor(a: Boolean, b: Boolean): Boolean = {
+   if(a==b) false
+   else true
+  }
 
-  def repeat(s: String, n: Int): String = throw new UnsupportedOperationException
   
-  def sqrtStep(c: Double, xn: Double): Double = throw new UnsupportedOperationException
-
-  def sqrtN(c: Double, x0: Double, n: Int): Double = throw new UnsupportedOperationException
+  def repeat(s: String, n: Int): String = {
+    val orig = s
+    repeat_helper(s, orig, n-1)
+  }
+  def repeat_helper(s: String, orig: String, n: Int):String ={
+    if(n > 0) repeat_helper(s + orig, orig, n - 1)
+    else s
+  }
   
-  def sqrtErr(c: Double, x0: Double, epsilon: Double): Double =
-    throw new UnsupportedOperationException
+  def sqrtStep(c: Double, xn: Double): Double = {
+    xn - (((xn*xn)-c)/(2*xn))
+  }
 
+  def sqrtN(c: Double, x0: Double, n: Int): Double = {
+		require(c >= 0, "c is negative") 
+		sqrtN_helper(c, x0, n, 0)
+  }
+  def sqrtN_helper(c: Double, x0: Double, n: Int, iter: Int): Double = {
+	  if(iter < n) {var temp = sqrtStep(c, x0)
+	  sqrtN_helper(c, temp, n, iter + 1)}
+	  else x0
+  }
+  
+  def sqrtErr(c: Double, x0: Double, epsilon: Double): Double ={
+    require(c >= 0, "c is negative")
+    if (abs((x0*x0)-c) >= epsilon){
+      val temp = sqrtStep(c, x0)
+      sqrtErr(c, temp, epsilon)
+    }else x0
+  }
   def sqrt(c: Double): Double = {
     require(c >= 0)
     if (c == 0) 0 else sqrtErr(c, 1.0, 0.0001)
@@ -102,12 +129,18 @@ object Lab1 extends jsy.util.JsyApplication {
   def repOk(t: SearchTree): Boolean = {
     def check(t: SearchTree, min: Int, max: Int): Boolean = t match {
       case Empty => true
-      case Node(l, d, r) => throw new UnsupportedOperationException
+      case Node(l, d, r) => min < d && d <= max && 
+      check(l, min, d) && check(r, d, max)
+      						
     }
     check(t, Int.MinValue, Int.MaxValue)
   }
   
-  def insert(t: SearchTree, n: Int): SearchTree = throw new UnsupportedOperationException
+  def insert(t: SearchTree, n: Int): SearchTree = t match {
+    case Node(l, d, r) => if(d > n) insert(l, n)
+    					else insert(r, n)
+     case(Empty) => Node(Empty, n, Empty)
+  }
   
   def deleteMin(t: SearchTree): (SearchTree, Int) = {
     require(t != Empty)
