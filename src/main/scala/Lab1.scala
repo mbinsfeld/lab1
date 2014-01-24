@@ -145,9 +145,9 @@ object Lab1 extends jsy.util.JsyApplication {
   }
   
   def insert(t: SearchTree, n: Int): SearchTree = t match {
-    case Node(l, d, r) => if(d > n) insert(l, n)
-    					else insert(r, n)
-     case(Empty) => Node(Empty, n, Empty)
+    case Node(l, d, r) => if(d > n) Node(insert(l, n), d, r)
+    					else Node(l, d, insert(r, n))
+    case(Empty) => Node(Empty, n, Empty)
   }
   
   def deleteMin(t: SearchTree): (SearchTree, Int) = {
