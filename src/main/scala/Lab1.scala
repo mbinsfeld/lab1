@@ -164,7 +164,7 @@ object Lab1 extends jsy.util.JsyApplication {
     case Empty => throw new UnsupportedOperationException
   	case Node(l, d, r) => val n1 = n 
   			if(n < d) Node(delete(l, n), d, r)
-    		else if(n == d)
+    		else if(d == n)
     		  t match{
     		  case Node(l, d1, Node(Empty, n, Empty)) => Node(l, d1, Empty)
     		  case Node(l, d1, Node(l1, n, Empty)) => Node(l, d1, l1)
@@ -182,8 +182,15 @@ object Lab1 extends jsy.util.JsyApplication {
   /* JavaScripty */
   
   def eval(e: Expr): Double = e match {
-    case N(n) => throw new UnsupportedOperationException
-    case _ => throw new UnsupportedOperationException
+    case N(n) => n
+    case Unary(Neg, e1) => eval(pretty(e1)) - 2*eval(pretty(e1))
+    case Binary(Plus, e1, e2) => eval(pretty(e1)) + eval(pretty(e2))
+    case Binary(Minus, e1, e2) => eval(pretty(e1)) - eval(pretty(e2))
+    case Binary(Times, e1, e2) => eval(pretty(e1)) * eval(pretty(e2))
+    case Binary(Div, Unary(Neg, e1), N(0)) => Double.NegativeInfinity
+    case Binary(Div, e1, N(0)) => Double.PositiveInfinity
+    case Binary(Div, e1, e2) => eval(pretty(e1)) / eval(pretty(e2))
+    
   }
   
  // Interface to run your interpreter from a string.  This is convenient
