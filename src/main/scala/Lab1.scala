@@ -156,7 +156,7 @@ object Lab1 extends jsy.util.JsyApplication {
       case Node(Empty, d, r) => (r, d)
       case Node(l, d, r) =>
         val (l1, m) = deleteMin(l)
-        throw new UnsupportedOperationException
+        return (Node(l1, d, r), m)
     }
   }
  
