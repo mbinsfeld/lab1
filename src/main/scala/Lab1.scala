@@ -160,7 +160,9 @@ object Lab1 extends jsy.util.JsyApplication {
     }
   }
  
-  def delete(t: SearchTree, n: Int): SearchTree = throw new UnsupportedOperationException
+  def delete(t: SearchTree, n: Int): SearchTree = t match{
+    
+  }
   
   /* JavaScripty */
   
