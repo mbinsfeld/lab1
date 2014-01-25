@@ -161,7 +161,22 @@ object Lab1 extends jsy.util.JsyApplication {
   }
  
   def delete(t: SearchTree, n: Int): SearchTree = t match{
-    
+    case Empty => throw new UnsupportedOperationException
+  	case Node(l, d, r) => val n1 = n 
+  			if(n < d) Node(delete(l, n), d, r)
+    		else if(n == d)
+    		  t match{
+    		  case Node(l, d1, Node(Empty, n, Empty)) => Node(l, d1, Empty)
+    		  case Node(l, d1, Node(l1, n, Empty)) => Node(l, d1, l1)
+    		  case Node(l, d1, Node(Empty, n, r1)) => Node(Empty, d1, r1)
+    		  case Node(l, d1, Node(l1, n, r1)) => throw new UnsupportedOperationException
+    		  case Node(Node(Empty, n, Empty), d1, r) => Node(Empty, d1, r)
+    		  case Node(Node(l1, n, Empty), d1, r) => Node(l1, d1, r)
+    		  case Node(Node(Empty, n, r1), d1, r) => Node(r1, d1, r)
+    		  case Node(Node(l1, n, r1), d1, r) => throw new UnsupportedOperationException
+    		}
+    		else Node(l, d, delete(r, n))
+  	
   }
   
   /* JavaScripty */
