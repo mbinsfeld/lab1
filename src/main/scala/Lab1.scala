@@ -75,7 +75,7 @@ object Lab1 extends jsy.util.JsyApplication {
 
   /* Exercises */
 
-  def abs(n: Double): Double = {
+  def abs(n: Double): Double = {//could square then take root
     if(n < 0) n * (-1); else n
   } 
 
@@ -136,7 +136,7 @@ object Lab1 extends jsy.util.JsyApplication {
   
   def repOk(t: SearchTree): Boolean = {
     def check(t: SearchTree, min: Int, max: Int): Boolean = t match {
-      case Empty => true
+      case Empty => true//yay we be done
       case Node(l, d, r) => min <= d && d < max && 
       check(l, min, d) && check(r, d, max)
       						
@@ -190,6 +190,7 @@ object Lab1 extends jsy.util.JsyApplication {
     case Binary(Div, Unary(Neg, e1), N(0)) => Double.NegativeInfinity
     case Binary(Div, e1, N(0)) => Double.PositiveInfinity
     case Binary(Div, e1, e2) => eval(pretty(e1)) / eval(pretty(e2))
+    case _ => throw new UnsupportedOperationException//added in after submitting
     
   }
   
